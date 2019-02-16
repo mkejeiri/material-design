@@ -1,14 +1,14 @@
-<mat-sidenav-container class="app-sidenav-container" autosize>
+<mat-sidenav-container class="app-sidenav-container" [class.theme-dark]="isDarkTheme" [dir]="dir">
     <mat-sidenav #sidenav class="app-sidenav" mat-elevation-z10 [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'">
         <mat-toolbar color="primary">
             Contact
         </mat-toolbar>
         <mat-nav-list>
-            <mat-list-item *ngFor="let user of users | async">
-                <a matLine href="#">{{ user.name }}</a>
-                <!-- <button mat-icon-button (click)="showInfo(link)">
-                    <mat-icon>info</mat-icon>
-                </button> -->
+            <mat-list-item *ngFor="let user of (users | async)">
+                <a matLine [routerLink]="['/contactmanager', user.id]">
+                    <mat-icon svgIcon="{{user.avatar}}"></mat-icon>
+                    {{ user?.name }}
+                </a>
             </mat-list-item>
         </mat-nav-list>
 
@@ -21,7 +21,7 @@
     </mat-sidenav>
 
     <div class="app-sidenav-content">
-        <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>
+        <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleThemeEvent)="toggleTheme()" (toggleDirEvent)="toggleDir()"></app-toolbar>
         <div class="wrapper">
             <router-outlet></router-outlet>
         </div>
@@ -31,5 +31,4 @@
             open nav-bar
         </button> -->
     </div>
-
 </mat-sidenav-container>

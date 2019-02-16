@@ -23,3 +23,7 @@ mat-icon {
     line-height: $iconWidth;
     color: white;
 }
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}

@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 // import { MaterialModule } from './shared/material.module';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     // MaterialModule,

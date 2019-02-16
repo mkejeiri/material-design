@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../shared/material.module';
 
@@ -12,11 +12,14 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NotesComponent } from './components/notes/notes.component';
+import { NewContactDialogComponent } from './components/new-contact-dialog/new-contact-dialog.component';
 
 const routes: Routes = [
   {
     path: '', component: ContactmanagerAppComponent,
     children: [
+      { path: ':id', component: MainContentComponent },
       { path: '', component: MainContentComponent }
     ]
   },
@@ -26,15 +29,23 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [ContactmanagerAppComponent, ToolbarComponent, MainContentComponent, SideNavComponent],
+  declarations: [
+    ContactmanagerAppComponent,
+    ToolbarComponent,
+    MainContentComponent,
+    SideNavComponent,
+    NotesComponent,
+    NewContactDialogComponent],
   imports: [
     CommonModule,
+    HttpClientModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
-    RouterModule.forChild(routes),
-    HttpClientModule
+    RouterModule.forChild(routes)
   ],
+  entryComponents: [NewContactDialogComponent],
   providers: [
     UserService
   ]

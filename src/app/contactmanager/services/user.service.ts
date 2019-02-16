@@ -9,16 +9,15 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class UserService {
   private dataStore: { users: User[]; };
-  // tslint:disable-next-line:variable-name
-  private _users: BehaviorSubject<User[]>;
+  private usersField: BehaviorSubject<User[]>;
 
   constructor(private http: HttpClient) {
     this.dataStore = { users: [] };
-    this._users  = new  BehaviorSubject([]);
+    this.usersField = new BehaviorSubject([]);
   }
 
   get users(): Observable<User[]> {
-    return this._users.asObservable();
+    return this.usersField.asObservable();
   }
 
   // loadAll(): Observable<User[]> {
@@ -28,11 +27,16 @@ export class UserService {
 
   loadAll() {
     const usersUrl = 'https://angular-material-api.azurewebsites.net/users';
-    return this.http.get<User[]>(usersUrl).subscribe(data => {
+    return this.http.get<User[]>(usersUrl).subscribe((data) => {
       this.dataStore.users = data;
-      this._users.next(Object.assign({}, this.dataStore).users);
-    }, err => {
-      console.log('Failed to fetch users');
+      console.log(Object.assign({}, this.dataStore).users);
+      this.usersField.next(Object.assign({}, this.dataStore).users);
+    }, (err) => {
+      console.error(err);
     });
+  }
+
+  public userById(id: number): User {
+    return this.dataStore.users.find(u => u.id === +id);
   }
 }
