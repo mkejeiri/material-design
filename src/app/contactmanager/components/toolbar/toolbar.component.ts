@@ -31,8 +31,7 @@ export class ToolbarComponent implements OnInit {
       console.log('the dialog was closed', result);
       if (result) {
         this.openSnackBar('Contact added', 'Navigate').onAction().subscribe(() => {
-          // this.route.navigate(['contactmanager/', result.id]);
-          this.route.navigate(['contactmanager/', 3]);
+          this.route.navigate(['contactmanager/', result.id]);
         });
       }
     });
